@@ -17,6 +17,7 @@ body {
   justify-content: center;
   width: 100vw;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 a {
@@ -29,11 +30,11 @@ h1 {
 .login-page {
   display: flex;
   min-height: 80vh;
-  width: 80vw;
+  min-width: 80vw;
   padding: 16px;
   background-color: white;
   border-radius: 16px;
-  margin: 5rem;
+  margin: 5rem 0;
 }
 
 .display-panel,
@@ -99,4 +100,37 @@ input:focus {
 .create-account-link {
   text-align: center;
   margin: 1rem 0;
+}
+
+.flashed-message {
+  opacity: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 3rem;
+  background-color: rgb(255, 201, 201);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  color: rgb(177, 43, 43);
+  transition: all 0.3s ease;
+}
+
+.flashed-message.success {
+  background-color: rgb(205, 255, 205);
+  color: rgb(28, 98, 28);
+}
+
+.dismiss-btn {
+  background: transparent;
+  font-size: 1.5rem;
+  border: none;
+  margin-right: 8px;
+}
+
+.hide {
+  opacity: 0;
 }

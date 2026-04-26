@@ -2,7 +2,7 @@ from flask import Flask
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET-KEY'] = 'djfspfaskddshfosjcks'
+    app.config['SECRET_KEY'] = 'djfspfaskddshfosjcks'
     
     from .auth import auth
 

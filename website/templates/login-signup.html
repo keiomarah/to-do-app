@@ -5,8 +5,8 @@ Up {% endif %} {% endblock %} {% block content %}
     <p class="display-panel-text">Turn your mess into your masterpiece.</p>
   </div>
   <div class="login-signup-panel">
-    <form class="login-signup-form">
-      {% if login %}
+    {% if login %}
+    <form class="login-signup-form" method="POST" action="/auth/login">
       <h1>Welcome Back!</h1>
       <p class="subtext">Please log in to your account to continue</p>
       <label for="email">Email</label>
@@ -17,7 +17,9 @@ Up {% endif %} {% endblock %} {% block content %}
       <p class="create-account-link">
         Don't have an account? <a href="/auth/signup">Create an account</a>
       </p>
-      {% else %}
+    </form>
+    {% else %}
+    <form class="login-signup-form" method="POST" action="/auth/signup">
       <h1>Get Started Now</h1>
       <p class="subtext">Create an account to continue</p>
       <label for="name">Name</label>
@@ -39,8 +41,8 @@ Up {% endif %} {% endblock %} {% block content %}
         I agree to the <a href="/auth/signup">Terms & Privacy</a></label
       >
       <button type="submit">Sign up</button>
-      {% endif %}
     </form>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
