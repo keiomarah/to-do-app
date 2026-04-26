@@ -16,14 +16,24 @@
     'failure' %}
     <div class="flashed-message" role="alert">
       {{ message }}
-      <button type="button" class="dismiss-btn">
+      <button
+        type="button"
+        class="dismiss-btn"
+        aria-hidden="true"
+        aria-label="close"
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     {% else %}
     <div class="flashed-message success" role="alert">
       {{ message }}
-      <button type="button" class="dismiss-btn">
+      <button
+        type="button"
+        class="dismiss-btn"
+        aria-hidden="true"
+        aria-label="close"
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

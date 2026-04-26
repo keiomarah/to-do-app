@@ -1,9 +1,26 @@
 from flask import Blueprint, render_template, request, flash
+from sqlalchemy import or_
+from .models import User
+from . import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint('auth', __name__, template_folder='.templates')
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        user = User.query.filter_by(email=email).first()
+
+        if user: 
+            if check_password_hash(user.password, password):
+                flash('Logged in successfully', category='success')
+            else:
+                flash('Oops! Incorrect password. Please try again', category='failure')
+        else:
+            flash('Oops! Seems like that user does not exist. Please create an account.', category=failure)
     return render_template("login-signup.html", login=True)
 
 
@@ -13,11 +30,21 @@ def signup():
         name = request.form.get('name')
         surname = request.form.get('surname')
         email = request.form.get('email')
+        phone = request.form.get('phone')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
-        tp = request.form.get('terms-and-privacy')
+        tp = bool(request.form.get('terms-and-privacy'))
 
-        if len(name) < 2:
+        user = User.query.filter(
+            or_(
+                User.email == email,
+                User.phone == phone
+            )
+        ).first()
+
+        if user:
+            flash('Sorry! User with that email or phone number already exists.', category='failure')
+        elif len(name) < 2:
             print('flash working?')
             flash('Name must be longer than a character', category='failure')
         elif len(surname) < 2:
@@ -29,6 +56,9 @@ def signup():
         elif (not tp):
             flash('Please agree to the terms and privacy', category='failure')
         else: 
+            new_user = User(name=name, surname=surname, email=email, phone=phone, password=generate_password_hash(password1), tp=tp)
+            db.session.add(new_user)
+            db.session.commit()
             flash('Account created successfully', category='success')
         
     return render_template("login-signup.html", login=False)
