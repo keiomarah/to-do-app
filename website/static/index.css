@@ -1,0 +1,102 @@
+html {
+  font-family: "Inter", sans-serif;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  /*border: 1px solid black;*/
+}
+
+body {
+  background-color: beige;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+}
+h1 {
+  font-weight: 400;
+}
+/*Login Page*/
+.login-page {
+  display: flex;
+  min-height: 80vh;
+  width: 80vw;
+  padding: 16px;
+  background-color: white;
+  border-radius: 16px;
+  margin: 5rem;
+}
+
+.display-panel,
+.login-signup-panel {
+  flex: 1;
+  border-radius: 16px;
+  padding: 5rem;
+}
+
+.display-panel {
+  background-image: url("https://i.pinimg.com/webp70/736x/9c/d7/34/9cd734b434d27352eba975c0a835a8ea.webp");
+  color: white;
+  position: relative;
+}
+
+.display-panel .display-panel-text {
+  font-size: 2rem;
+}
+
+.login-signup-form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 500;
+}
+
+input {
+  border-radius: 10px;
+  padding: 8px;
+  margin: 8px 0 16px 0;
+  border: 1px solid grey;
+}
+
+input:focus {
+  outline: none;
+  border: 2px solid #6366f1;
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.6);
+}
+
+.login-signup-form .subtext {
+  margin: 1rem 0;
+  color: grey;
+}
+
+.login-signup-form button {
+  all: unset;
+  background-color: blueviolet;
+  color: white;
+  font-weight: 500;
+  padding: 8px 0;
+  text-align: center;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.login-signup-form button:hover {
+  background-color: black;
+  cursor: pointer;
+}
+
+.create-account-link {
+  text-align: center;
+  margin: 1rem 0;
+}
