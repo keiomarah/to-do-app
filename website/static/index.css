@@ -1,6 +1,7 @@
 html {
   font-family: "Inter", sans-serif;
 }
+
 *,
 *::before,
 *::after {
@@ -26,6 +27,23 @@ a {
 h1 {
   font-weight: 400;
 }
+
+.purple-button {
+  all: unset;
+  background-color: blueviolet;
+  color: white;
+  font-weight: 500;
+  padding: 8px 0;
+  text-align: center;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.purple-button:hover {
+  background-color: black;
+  cursor: pointer;
+}
+
 /*Login Page*/
 .login-page {
   display: flex;
@@ -81,22 +99,6 @@ input:focus {
   color: grey;
 }
 
-.login-signup-form button {
-  all: unset;
-  background-color: blueviolet;
-  color: white;
-  font-weight: 500;
-  padding: 8px 0;
-  text-align: center;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-}
-
-.login-signup-form button:hover {
-  background-color: black;
-  cursor: pointer;
-}
-
 .create-account-link {
   text-align: center;
   margin: 1rem 0;
@@ -133,4 +135,165 @@ input:focus {
 
 .hide {
   opacity: 0;
+}
+
+/*Dashboard*/
+.home-page {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.main-dashboard {
+  background-color: white;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.main-dashboard header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-dashboard header button {
+  height: 2rem;
+  width: 12rem;
+}
+.progress-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  column-gap: 2rem;
+  height: 30vh;
+}
+
+.round-style {
+  border-radius: 10px;
+  padding: 1.8rem;
+}
+
+.daily-progress-container {
+  background-color: rgba(137, 43, 226, 0.14);
+  border: 1px solid rgba(137, 43, 226, 0.558);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.daily-progress-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon {
+  padding: 8px;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  color: rgb(82, 17, 144);
+  background-color: rgba(137, 43, 226, 0.274);
+}
+
+.high-priority-progress-container .icon {
+  background-color: rgba(255, 0, 0, 0.311);
+  color: rgb(144, 16, 16);
+  width: fit-content;
+  border-radius: 50%;
+}
+
+.completed-week-container .icon {
+  background-color: rgb(169, 255, 169);
+  color: rgb(33, 94, 33);
+  width: fit-content;
+  border-radius: 50%;
+}
+
+.secondary-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: rgba(128, 128, 128, 0.118);
+  border: 1px solid rgba(128, 128, 128, 0.652);
+  text-align: center;
+}
+
+.progress-bar {
+  height: 1rem;
+  border-radius: 20px;
+  background-color: rgba(137, 43, 226, 0.274);
+  margin-bottom: 16px;
+  margin-top: 8px;
+}
+
+.progress-bar-container .details-container {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.progress-bar-container .details-container p:last-of-type {
+  color: rgb(82, 17, 144);
+}
+
+#high-priority-counter,
+#completed-counter {
+  font-weight: 800;
+  font-size: 2rem;
+}
+
+.task {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  height: 4rem;
+  background-color: rgba(128, 128, 128, 0.118);
+  border: 1px solid rgba(128, 128, 128, 0.652);
+  margin: 1rem 0;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.task-name {
+  font-weight: 500;
+}
+
+.task > div {
+  display: flex;
+}
+
+.task input {
+  transform: scale(2);
+  accent-color: blueviolet;
+  margin: 0 15px 0 5px;
+}
+
+.task-priority {
+  padding: 8px;
+  border-radius: 10px;
+}
+
+.medium {
+  background-color: rgba(255, 166, 0, 0.412);
+  color: rgb(157, 94, 0);
+}
+
+.task-details {
+  display: flex;
+  align-items: center;
+  width: 28%;
+  justify-content: space-evenly;
+}
+
+.edit-delete-buttons button {
+  all: unset;
+  color: grey;
+  transition: all 0.3s ease;
+}
+
+.edit-delete-buttons button:hover {
+  cursor: pointer;
+  color: black;
 }

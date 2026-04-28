@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from sqlalchemy import or_
 from .models import User
 from . import db
@@ -17,10 +17,11 @@ def login():
         if user: 
             if check_password_hash(user.password, password):
                 flash('Logged in successfully', category='success')
+                return redirect(url_for('views.home'))
             else:
                 flash('Oops! Incorrect password. Please try again', category='failure')
         else:
-            flash('Oops! Seems like that user does not exist. Please create an account.', category=failure)
+            flash('Oops! Seems like that user does not exist. Please create an account.', category='failure')
     return render_template("login-signup.html", login=True)
 
 

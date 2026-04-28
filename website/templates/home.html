@@ -1,0 +1,78 @@
+{% extends 'base.html' %} {% block content %}
+<div class="home-page">
+  <div id="homepage-sidebar">
+    <div class="logo container"></div>
+    <ul class="filters"></ul>
+    <ul class="categories"></ul>
+  </div>
+  <div id="main-dashboard" class="main-dashboard">
+    <header>
+      <div>
+        <h1>My Dashboard</h1>
+        <p>Good morning, Jane! You have 1 pending task</p>
+      </div>
+      <button class="purple-button"><span>&plus;</span> Add new task</button>
+    </header>
+    <div class="progress-container">
+      <div class="daily-progress-container round-style">
+        <div class="daily-progress-title">
+          <h2>Daily progress</h2>
+          <div class="icon">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+        </div>
+        <div class="progress-bar-container">
+          <div class="details-container">
+            <p>0 of 1 Tasks Completed </p><p>0%</[]>
+          </div>
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+      <div
+        class="high-priority-progress-container round-style secondary-progress"
+      >
+        <div class="icon">
+          <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+        <p id="high-priority-counter">0</p>
+        <p>High <br />Priority</p>
+      </div>
+      <div class="completed-week-container round-style secondary-progress">
+        <div class="icon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <p id="completed-counter">0</p>
+        <p>Completed<br /> this week</p>
+      </div>
+    </div>
+    <div class="today-task-container">
+      <h3>Today's Tasks</h3>
+      <form class="tasks-container">
+        <div class="task">
+          <div>
+            <input type="checkbox">
+            <div class="task-name">
+              <p>Going to the gym</p>
+            </div>
+          </div>
+          <div class="task-details">
+            <div class="task-priority medium">Medium</div>
+            <div class="task-date">
+              <i class="fa-regular fa-calendar"></i>
+              Mar 9, 2026
+            </div>
+            <div class="edit-delete-buttons">
+              <button type="button">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+              <button type="button">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
