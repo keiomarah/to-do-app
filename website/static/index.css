@@ -77,7 +77,8 @@ h1 {
   flex-direction: column;
 }
 
-label {
+label,
+legend {
   font-weight: 500;
 }
 
@@ -86,6 +87,7 @@ input {
   padding: 8px;
   margin: 8px 0 16px 0;
   border: 1px solid grey;
+  font-family: "Inter", sans-serif;
 }
 
 input:focus {
@@ -131,6 +133,7 @@ input:focus {
   font-size: 1.5rem;
   border: none;
   margin-right: 8px;
+  cursor: pointer;
 }
 
 .hide {
@@ -296,4 +299,83 @@ input:focus {
 .edit-delete-buttons button:hover {
   cursor: pointer;
   color: black;
+}
+
+dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30vw;
+  height: fit-content;
+  padding: 16px;
+  border-radius: 10px;
+  border: 2px solid grey;
+}
+
+dialog div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+dialog form {
+  display: flex;
+  flex-direction: column;
+}
+dialog::backdrop {
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.priority-group label {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: rgba(128, 128, 128, 0.118);
+  border: 1px solid rgba(128, 128, 128, 0.652);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 10px;
+}
+
+.priority-group input[type="radio"]:checked + label.low {
+  background-color: rgb(169, 255, 169);
+  color: rgb(33, 94, 33);
+  border: 1px solid rgb(33, 94, 33);
+}
+
+.priority-group input[type="radio"]:checked + label.medium-p {
+  background-color: rgba(255, 166, 0, 0.412);
+  color: rgb(157, 94, 0);
+  border: 1px solid rgb(157, 94, 0);
+}
+
+.priority-group input[type="radio"]:checked + label.high {
+  background-color: rgba(255, 0, 0, 0.311);
+  color: rgb(144, 16, 16);
+  border: 1px solid rgb(144, 16, 16);
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  gap: 16px;
+  padding: 8px 0 16px 0;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.dialog-buttons button {
+  padding: 8px 16px;
+}
+
+.cancel {
+  background-color: grey;
 }

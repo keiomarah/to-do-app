@@ -15,9 +15,10 @@ class User(db.Model, UserMixin):
 
 
 class Task(db.Model):
-    name = db.Column(db.String(1000))
+    task_name = db.Column(db.String(1000))
     complete = db.Column(db.Boolean, default=False)
     due = db.Column(db.Date, default=func.now())
+    priority = db.Column(db.Integer)
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 

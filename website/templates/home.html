@@ -1,4 +1,31 @@
 {% extends 'base.html' %} {% block content %}
+<dialog id="add-task-dialog">
+  <div>
+     <h2>Edit Task</h2>
+     <button class="dismiss-btn" id="close-dialog-btn">&times;</button>
+  </div>
+  <form id="new-task-form" method="POST" action="/add-task">
+    <label for="task_name">Task Title</label>
+    <input type="text" id="task_name" name="task_name"/>
+    <label>Due Date</label>
+    <input type="date" id="due_date" name="due_date" />
+    <fieldset class="priority-group">
+      <legend>Priority</legend>
+      <input type="radio" id="low" name="priority" value="1">
+      <label for="low" class="low">Low</label>
+
+      <input type="radio" id="medium" name="priority" value="2">
+      <label for="medium" class="medium-p">Medium</label>
+
+      <input type="radio" id="high" name="priority" value="3">
+      <label for="high" class="high">High</label>  
+    </fieldset>
+    <div class="dialog-buttons">
+    <button class="purple-button cancel">Cancel</button>
+    <button class="purple-button" type="submit" for="new-task-form">Save Changes</button>
+  </div>
+  </form>
+</dialog>
 <div class="home-page">
   <div id="homepage-sidebar">
     <div class="logo container"></div>
@@ -11,7 +38,7 @@
         <h1>My Dashboard</h1>
         <p>Good morning, Jane! You have 1 pending task</p>
       </div>
-      <button class="purple-button"><span>&plus;</span> Add new task</button>
+      <button class="purple-button" id="add-task-btn"><span>&plus;</span> Add new task</button>
     </header>
     <div class="progress-container">
       <div class="daily-progress-container round-style">
@@ -48,6 +75,7 @@
     <div class="today-task-container">
       <h3>Today's Tasks</h3>
       <form class="tasks-container">
+        <!----------------------------------------------------------------------------------------->
         <div class="task">
           <div>
             <input type="checkbox">
@@ -71,6 +99,8 @@
             </div>
           </div>
         </div>
+
+        <!----------------------------------------------------------------------------------------->
       </form>
     </div>
   </div>

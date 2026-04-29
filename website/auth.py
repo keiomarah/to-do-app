@@ -3,7 +3,7 @@ from sqlalchemy import or_
 from .models import User
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask_login import login_user, login_required, logout_user, current_user
 auth = Blueprint('auth', __name__, template_folder='.templates')
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -17,6 +17,7 @@ def login():
         if user: 
             if check_password_hash(user.password, password):
                 flash('Logged in successfully', category='success')
+                login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
                 flash('Oops! Incorrect password. Please try again', category='failure')
@@ -60,6 +61,8 @@ def signup():
             new_user = User(name=name, surname=surname, email=email, phone=phone, password=generate_password_hash(password1), tp=tp)
             db.session.add(new_user)
             db.session.commit()
+            login_user(new_user, remember=True)
             flash('Account created successfully', category='success')
+            return redirect(url_for('views.home'))
         
     return render_template("login-signup.html", login=False)
