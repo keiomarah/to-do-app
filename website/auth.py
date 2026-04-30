@@ -11,14 +11,14 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-
+        print(email)
         user = User.query.filter_by(email=email).first()
 
         if user: 
             if check_password_hash(user.password, password):
                 flash('Logged in successfully', category='success')
                 login_user(user, remember=True)
-                return redirect(url_for('views.home'))
+                return redirect(url_for('views.home', user=current_user))
             else:
                 flash('Oops! Incorrect password. Please try again', category='failure')
         else:
@@ -63,6 +63,6 @@ def signup():
             db.session.commit()
             login_user(new_user, remember=True)
             flash('Account created successfully', category='success')
-            return redirect(url_for('views.home'))
+            return redirect(url_for('views.home', user=current_user))
         
     return render_template("login-signup.html", login=False)

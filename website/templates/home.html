@@ -11,14 +11,14 @@
     <input type="date" id="due_date" name="due_date" />
     <fieldset class="priority-group">
       <legend>Priority</legend>
-      <input type="radio" id="low" name="priority" value="1">
-      <label for="low" class="low">Low</label>
+      <input type="radio" id="low" name="priority" value="low">
+      <label for="low" class="low-p">Low</label>
 
-      <input type="radio" id="medium" name="priority" value="2">
+      <input type="radio" id="medium" name="priority" value="medium">
       <label for="medium" class="medium-p">Medium</label>
 
-      <input type="radio" id="high" name="priority" value="3">
-      <label for="high" class="high">High</label>  
+      <input type="radio" id="high" name="priority" value="high">
+      <label for="high" class="high-p">High</label>  
     </fieldset>
     <div class="dialog-buttons">
     <button class="purple-button cancel">Cancel</button>
@@ -36,7 +36,7 @@
     <header>
       <div>
         <h1>My Dashboard</h1>
-        <p>Good morning, Jane! You have 1 pending task</p>
+        <p>Good morning, {{user.name}}! You have 1 pending task</p>
       </div>
       <button class="purple-button" id="add-task-btn"><span>&plus;</span> Add new task</button>
     </header>
@@ -76,30 +76,33 @@
       <h3>Today's Tasks</h3>
       <form class="tasks-container">
         <!----------------------------------------------------------------------------------------->
-        <div class="task">
-          <div>
-            <input type="checkbox">
-            <div class="task-name">
-              <p>Going to the gym</p>
+        {% if user.tasks %}
+          {% for task in user.tasks %}
+          <div class="task">
+            <div>
+              <input type="checkbox" {% if task.complete %} checked {% endif %} id="" onChange="updateTask({{ task.id }})">
+              <div class="task-name">
+                <p>{{task.task_name}}</p>
+              </div>
+            </div>
+            <div class="task-details">
+              <div class="task-priority {{task.priority}}">{{task.priority}}</div>
+              <div class="task-date">
+                <i class="fa-regular fa-calendar"></i>
+                {{task.due.strftime("%b %d, %Y")}}
+              </div>
+              <div class="edit-delete-buttons">
+                <button type="button">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </button>
+                <button type="button">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+              </div>
             </div>
           </div>
-          <div class="task-details">
-            <div class="task-priority medium">Medium</div>
-            <div class="task-date">
-              <i class="fa-regular fa-calendar"></i>
-              Mar 9, 2026
-            </div>
-            <div class="edit-delete-buttons">
-              <button type="button">
-                <i class="fa-regular fa-pen-to-square"></i>
-              </button>
-              <button type="button">
-                <i class="fa-regular fa-trash-can"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
+          {% endfor %}
+        {% endif %}
         <!----------------------------------------------------------------------------------------->
       </form>
     </div>

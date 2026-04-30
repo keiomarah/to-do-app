@@ -273,9 +273,18 @@ input:focus {
   margin: 0 15px 0 5px;
 }
 
+.task input:focus {
+  border: none;
+  box-shadow: none;
+}
 .task-priority {
   padding: 8px;
   border-radius: 10px;
+}
+
+.low {
+  background-color: rgb(169, 255, 169);
+  color: rgb(33, 94, 33);
 }
 
 .medium {
@@ -283,6 +292,10 @@ input:focus {
   color: rgb(157, 94, 0);
 }
 
+.high {
+  background-color: rgba(255, 0, 0, 0.311);
+  color: rgb(144, 16, 16);
+}
 .task-details {
   display: flex;
   align-items: center;
@@ -341,22 +354,22 @@ input[type="radio"] {
   border-radius: 10px;
 }
 
-.priority-group input[type="radio"]:checked + label.low {
+.priority-group input[type="radio"]:checked + label.low-p {
   background-color: rgb(169, 255, 169);
   color: rgb(33, 94, 33);
-  border: 1px solid rgb(33, 94, 33);
+  border: none;
 }
 
 .priority-group input[type="radio"]:checked + label.medium-p {
   background-color: rgba(255, 166, 0, 0.412);
   color: rgb(157, 94, 0);
-  border: 1px solid rgb(157, 94, 0);
+  border: none;
 }
 
-.priority-group input[type="radio"]:checked + label.high {
+.priority-group input[type="radio"]:checked + label.high-p {
   background-color: rgba(255, 0, 0, 0.311);
   color: rgb(144, 16, 16);
-  border: 1px solid rgb(144, 16, 16);
+  border: none;
 }
 
 fieldset {

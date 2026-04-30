@@ -18,7 +18,7 @@ class Task(db.Model):
     task_name = db.Column(db.String(1000))
     complete = db.Column(db.Boolean, default=False)
     due = db.Column(db.Date, default=func.now())
-    priority = db.Column(db.Integer)
+    priority = db.Column(db.String(150))
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 

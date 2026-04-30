@@ -1,4 +1,4 @@
-document.querySelectorAll(".flash-dismiss-btn").forEach((btn) => {
+document.querySelectorAll(".dismiss-btn.flash-dismiss-btn").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const message = e.target.closest(".flashed-message");
     if (message) {
@@ -22,3 +22,12 @@ addTaskBtn.addEventListener("click", () => {
 closeDialogBtn.addEventListener("click", () => {
   addTaskDialog.close();
 });
+
+function updateTask(taskId) {
+  fetch("/update-task", {
+    method: "POST",
+    body: JSON.stringify({ taskId: taskId }),
+  }).then((res) => {
+    window.location.href - "/";
+  });
+}

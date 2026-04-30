@@ -1,15 +1,16 @@
-from flask import render_template, Blueprint, request
+from flask import render_template, Blueprint, request, jsonify, redirect, url_for
 from .models import Task
 from flask_login import login_required, current_user
 from . import db
 from datetime import datetime
+import json
 
 views = Blueprint('views', __name__, template_folder='.templates')
 
 @views.route('/')
 @login_required
 def home():
-    return render_template('home.html')
+    return render_template('home.html', user=current_user)
 
 @views.route('/add-task', methods=['POST'])
 @login_required
@@ -24,4 +25,15 @@ def add_task():
         db.session.add(new_task)
         db.session.commit()
 
-    return render_template('home.html', user=current_user)
+    return redirect(url_for('views.home'), user=current_user)
+
+@views.route('/update-task', methods=['POST'])
+@login_required
+def update_task():
+    taskId = json.loads(request.data)['taskId']
+
+    task = Task.query.filter_by(id=taskId).first()
+    if task:
+        task.complete = not task.complete
+        db.session.commit()
+    return jsonify({})
