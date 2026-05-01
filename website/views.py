@@ -4,12 +4,18 @@ from flask_login import login_required, current_user
 from . import db
 from datetime import datetime
 import json
+from datetime import date
 
 views = Blueprint('views', __name__, template_folder='.templates')
 
 @views.route('/')
 @login_required
 def home():
+    tasks = Task.query.filter_by(user_id=current_user.id).all()
+    today = date.today()
+
+    for task in tasks:
+       task.is_today = task.due == today
     return render_template('home.html', user=current_user)
 
 @views.route('/add-task', methods=['POST'])
@@ -25,15 +31,27 @@ def add_task():
         db.session.add(new_task)
         db.session.commit()
 
-    return redirect(url_for('views.home'), user=current_user)
+    return redirect(url_for('views.home', user=current_user))
 
 @views.route('/update-task', methods=['POST'])
 @login_required
 def update_task():
     taskId = json.loads(request.data)['taskId']
 
-    task = Task.query.filter_by(id=taskId).first()
+    task = Task.query.get(taskId)
     if task:
         task.complete = not task.complete
+        db.session.commit()
+    return jsonify({})
+
+@views.route('delete-task', methods=['POST'])
+@login_required
+def delete_task():
+    taskId = json.loads(request.data)['taskId']
+
+    task = db.session.get(Task, taskId)
+    print(task)
+    if task: 
+        db.session.delete(task)
         db.session.commit()
     return jsonify({})

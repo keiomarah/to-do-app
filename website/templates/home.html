@@ -1,29 +1,31 @@
 {% extends 'base.html' %} {% block content %}
 <dialog id="add-task-dialog">
   <div>
-     <h2>Edit Task</h2>
-     <button class="dismiss-btn" id="close-dialog-btn">&times;</button>
+    <h2>Edit Task</h2>
+    <button class="dismiss-btn" id="close-dialog-btn">&times;</button>
   </div>
   <form id="new-task-form" method="POST" action="/add-task">
     <label for="task_name">Task Title</label>
-    <input type="text" id="task_name" name="task_name"/>
+    <input type="text" id="task_name" name="task_name" />
     <label>Due Date</label>
     <input type="date" id="due_date" name="due_date" />
     <fieldset class="priority-group">
       <legend>Priority</legend>
-      <input type="radio" id="low" name="priority" value="low">
+      <input type="radio" id="low" name="priority" value="low" />
       <label for="low" class="low-p">Low</label>
 
-      <input type="radio" id="medium" name="priority" value="medium">
+      <input type="radio" id="medium" name="priority" value="medium" />
       <label for="medium" class="medium-p">Medium</label>
 
-      <input type="radio" id="high" name="priority" value="high">
-      <label for="high" class="high-p">High</label>  
+      <input type="radio" id="high" name="priority" value="high" />
+      <label for="high" class="high-p">High</label>
     </fieldset>
     <div class="dialog-buttons">
-    <button class="purple-button cancel">Cancel</button>
-    <button class="purple-button" type="submit" for="new-task-form">Save Changes</button>
-  </div>
+      <button class="purple-button cancel">Cancel</button>
+      <button class="purple-button" type="submit" for="new-task-form">
+        Save Changes
+      </button>
+    </div>
   </form>
 </dialog>
 <div class="home-page">
@@ -36,9 +38,14 @@
     <header>
       <div>
         <h1>My Dashboard</h1>
-        <p>Good morning, {{user.name}}! You have 1 pending task</p>
+        <p>
+          Good morning, {{user.name}}! You have
+          <span id="pending-task-counter"></span> pending task
+        </p>
       </div>
-      <button class="purple-button" id="add-task-btn"><span>&plus;</span> Add new task</button>
+      <button class="purple-button" id="add-task-btn">
+        <span>&plus;</span> Add new task
+      </button>
     </header>
     <div class="progress-container">
       <div class="daily-progress-container round-style">
@@ -50,9 +57,15 @@
         </div>
         <div class="progress-bar-container">
           <div class="details-container">
-            <p>0 of 1 Tasks Completed </p><p>0%</[]>
+            <p>
+              <span id="completed-tasks-today"></span> of
+              <span id="total-tasks-today"></span> Tasks Completed
+            </p>
+            <p><span id="percent-complete"></span>%</p>
           </div>
-          <div class="progress-bar"></div>
+          <div class="progress-bar">
+            <div class="progress" id="progress-bar-solid"></div>
+          </div>
         </div>
       </div>
       <div
@@ -69,40 +82,58 @@
           <i class="fa-solid fa-circle-check"></i>
         </div>
         <p id="completed-counter">0</p>
-        <p>Completed<br /> this week</p>
+        <p>
+          Completed<br />
+          this week
+        </p>
       </div>
     </div>
     <div class="today-task-container">
       <h3>Today's Tasks</h3>
       <form class="tasks-container">
         <!----------------------------------------------------------------------------------------->
-        {% if user.tasks %}
-          {% for task in user.tasks %}
-          <div class="task">
-            <div>
-              <input type="checkbox" {% if task.complete %} checked {% endif %} id="" onChange="updateTask({{ task.id }})">
-              <div class="task-name">
-                <p>{{task.task_name}}</p>
-              </div>
-            </div>
-            <div class="task-details">
-              <div class="task-priority {{task.priority}}">{{task.priority}}</div>
-              <div class="task-date">
-                <i class="fa-regular fa-calendar"></i>
-                {{task.due.strftime("%b %d, %Y")}}
-              </div>
-              <div class="edit-delete-buttons">
-                <button type="button">
-                  <i class="fa-regular fa-pen-to-square"></i>
-                </button>
-                <button type="button">
-                  <i class="fa-regular fa-trash-can"></i>
-                </button>
-              </div>
+        {% if user.tasks %} {% for task in user.tasks %} {% if task.is_today %}
+        <div
+          class="task"
+          id="{{ task.id }}-task"
+          data-due="{{ task.due.isoformat() }}"
+          data-complete="{{ task.complete }}"
+        >
+          <div>
+            <input
+              type="checkbox"
+              {%
+              if
+              task.complete
+              %}
+              checked
+              {%
+              endif
+              %}
+              id=""
+              onChange="updateTask({{ task.id }})"
+            />
+            <div class="task-name">
+              <p>{{task.task_name}}</p>
             </div>
           </div>
-          {% endfor %}
-        {% endif %}
+          <div class="task-details">
+            <div class="task-priority {{task.priority}}">{{task.priority}}</div>
+            <div class="task-date">
+              <i class="fa-regular fa-calendar"></i>
+              {{task.due.strftime("%b %d, %Y")}}
+            </div>
+            <div class="edit-delete-buttons">
+              <button type="button">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+              <button type="button" onClick="deleteTask({{ task.id }})">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endif %} {% endfor %} {% endif %}
         <!----------------------------------------------------------------------------------------->
       </form>
     </div>
