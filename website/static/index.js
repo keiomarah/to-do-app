@@ -11,9 +11,6 @@ document.querySelectorAll(".dismiss-btn.flash-dismiss-btn").forEach((btn) => {
   });
 });
 
-const addTaskBtn = document.getElementById("add-task-btn");
-const closeDialogBtn = document.getElementById("close-dialog-btn");
-const addTaskDialog = document.getElementById("add-task-dialog");
 const tasks = document.querySelectorAll(".task");
 const pendingTaskCounter = document.getElementById("pending-task-counter");
 const highPriorityCounter = document.getElementById("high-priority-counter");
@@ -21,8 +18,12 @@ const totalTasksToday = document.getElementById("total-tasks-today");
 const completedTasksToday = document.getElementById("completed-tasks-today");
 const percentComplete = document.getElementById("percent-complete");
 const progressBar = document.getElementById("progress-bar-solid");
+const CompletedThisWeek = document.getElementById("completed-counter");
+
+CompletedThisWeek.textContent = "0";
 let progressBarWidth = 0;
 const today = new Date();
+const sevenDaysAgo = today - 7 * 24 * 60 * 60 * 1000;
 today.setHours(0, 0, 0, 0);
 document.querySelectorAll("input[type='checkbox']").forEach((cb) => {
   cb.addEventListener("change", dailyProgressBar);
@@ -41,7 +42,22 @@ function pendingTasks() {
 
   pendingTaskCounter.textContent = uncompleted;
 }
+function updateCompletedCounter() {
+  let counter = 0;
 
+  fetch("/tasks")
+    .then((res) => res.json())
+    .then((tasks) => {
+      tasks.forEach((task) => {
+        taskDue = new Date(task.due).setHours(0, 0, 0, 0);
+        if (taskDue > sevenDaysAgo && taskDue <= today && task.completed) {
+          counter++;
+        }
+      });
+      console.log(counter);
+      CompletedThisWeek.textContent = counter;
+    });
+}
 function dailyProgressBar() {
   const tasks = document.querySelectorAll(".task");
   let totalToday = 0;
@@ -106,19 +122,10 @@ function highPriorityTasks() {
     if (priority.classList.contains("high")) {
       highPriority++;
     }
-
-    highPriorityCounter.textContent = highPriority;
   });
+
+  highPriorityCounter.textContent = highPriority;
 }
-
-function dailyProgressTasks() {}
-addTaskBtn.addEventListener("click", () => {
-  addTaskDialog.showModal();
-});
-
-closeDialogBtn.addEventListener("click", () => {
-  addTaskDialog.close();
-});
 
 function updateTask(taskId) {
   fetch("/update-task", {
@@ -131,6 +138,7 @@ function updateTask(taskId) {
     })
     .then((res) => {
       dailyProgressBar();
+      updateCompletedCounter();
     });
 }
 
@@ -145,9 +153,11 @@ function deleteTask(taskId) {
       pendingTasks();
       highPriorityTasks();
       dailyProgressBar();
+      updateCompletedCounter();
     });
 }
 
 pendingTasks();
 highPriorityTasks();
 dailyProgressBar();
+updateCompletedCounter();

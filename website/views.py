@@ -18,6 +18,21 @@ def home():
        task.is_today = task.due == today
     return render_template('home.html', user=current_user)
 
+@views.route("/all-tasks")
+@login_required
+def all_tasks():
+    return render_template('all-tasks.html', user=current_user)
+
+@views.route("/completed-tasks")
+@login_required
+def completed_tasks():
+    return render_template("completed.html", user=current_user)
+
+@views.route("/high-priority-tasks")
+@login_required
+def high_priority_tasks():
+    return render_template("high-priority.html", user=current_user)
+
 @views.route('/add-task', methods=['POST'])
 @login_required
 def add_task():
@@ -31,7 +46,7 @@ def add_task():
         db.session.add(new_task)
         db.session.commit()
 
-    return redirect(url_for('views.home', user=current_user))
+    return redirect(request.referrer)
 
 @views.route('/update-task', methods=['POST'])
 @login_required
@@ -55,3 +70,17 @@ def delete_task():
         db.session.delete(task)
         db.session.commit()
     return jsonify({})
+
+@views.route('/tasks', methods=['GET'])
+def tasks():
+    tasks = Task.query.filter_by(user_id=current_user.id).all()
+
+    return jsonify([
+    {
+        "id": task.id,
+        "title": task.task_name,
+        "completed": task.complete,
+        "due": task.due.isoformat()
+    }
+    for task in tasks
+    ])

@@ -328,9 +328,9 @@ dialog {
   transform: translate(-50%, -50%);
   width: 30vw;
   height: fit-content;
-  padding: 16px;
+  padding: 24px;
   border-radius: 10px;
-  border: 2px solid grey;
+  border: none;
 }
 
 dialog div {
@@ -344,7 +344,7 @@ dialog form {
 }
 dialog::backdrop {
   backdrop-filter: blur(6px);
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(148, 148, 148, 0.4);
 }
 
 input[type="radio"] {
@@ -364,19 +364,19 @@ input[type="radio"] {
 .priority-group input[type="radio"]:checked + label.low-p {
   background-color: rgb(169, 255, 169);
   color: rgb(33, 94, 33);
-  border: none;
+  border: solid 1px green;
 }
 
 .priority-group input[type="radio"]:checked + label.medium-p {
   background-color: rgba(255, 166, 0, 0.412);
   color: rgb(157, 94, 0);
-  border: none;
+  border: solid 1px orange;
 }
 
 .priority-group input[type="radio"]:checked + label.high-p {
   background-color: rgba(255, 0, 0, 0.311);
   color: rgb(144, 16, 16);
-  border: none;
+  border: solid 1px red;
 }
 
 fieldset {

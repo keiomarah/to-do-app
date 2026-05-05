@@ -1,0 +1,51 @@
+{% extends 'home.html' %} {% block dashboard %}
+<button type="button" class="purple-button" id="add-task-btn2">
+  <span>&plus;</span> Add new task
+</button>
+<form class="tasks-container">
+  <!----------------------------------------------------------------------------------------->
+  {% if user.tasks %} {% for task in user.tasks %}
+  <div
+    class="task"
+    id="{{ task.id }}-task"
+    data-due="{{ task.due.isoformat() }}"
+    data-complete="{{ task.complete }}"
+  >
+    <div>
+      <input
+        type="checkbox"
+        {%
+        if
+        task.complete
+        %}
+        checked
+        {%
+        endif
+        %}
+        id=""
+        onChange="updateTask({{ task.id }})"
+      />
+      <div class="task-name">
+        <p>{{task.task_name}}</p>
+      </div>
+    </div>
+    <div class="task-details">
+      <div class="task-priority {{task.priority}}">{{task.priority}}</div>
+      <div class="task-date">
+        <i class="fa-regular fa-calendar"></i>
+        {{task.due.strftime("%b %d, %Y")}}
+      </div>
+      <div class="edit-delete-buttons">
+        <button type="button">
+          <i class="fa-regular fa-pen-to-square"></i>
+        </button>
+        <button type="button" onClick="deleteTask({{ task.id }})">
+          <i class="fa-regular fa-trash-can"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  {% endfor %} {% endif %}
+  <!----------------------------------------------------------------------------------------->
+</form>
+{% endblock %}

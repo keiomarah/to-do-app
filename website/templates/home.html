@@ -8,7 +8,7 @@
     <label for="task_name">Task Title</label>
     <input type="text" id="task_name" name="task_name" />
     <label>Due Date</label>
-    <input type="date" id="due_date" name="due_date" />
+    <input type="date" id="due_date" name="due_date" placeholder="today" />
     <fieldset class="priority-group">
       <legend>Priority</legend>
       <input type="radio" id="low" name="priority" value="low" />
@@ -31,16 +31,22 @@
 <div class="home-page">
   <div id="homepage-sidebar">
     <div class="logo container"></div>
-    <ul class="filters"></ul>
-    <ul class="categories"></ul>
+    <ul class="categories">
+      <h3>Categories</h3>
+      <li><a href="/">Today</a></li>
+      <li><a href="/all-tasks">All Tasks</a></li>
+      <li><a href="/completed-tasks">Completed</a></li>
+      <li><a href="/high-priority-tasks">High Priority</a></li>
+    </ul>
   </div>
   <div id="main-dashboard" class="main-dashboard">
+    {% block dashboard %}
     <header>
       <div>
         <h1>My Dashboard</h1>
         <p>
-          Good morning, {{user.name}}! You have
-          <span id="pending-task-counter"></span> pending task
+          Hi, {{user.name}}! You have
+          <span id="pending-task-counter"></span> pending task(s)
         </p>
       </div>
       <button class="purple-button" id="add-task-btn">
@@ -137,6 +143,7 @@
         <!----------------------------------------------------------------------------------------->
       </form>
     </div>
+    {% endblock %}
   </div>
 </div>
 {% endblock %}
