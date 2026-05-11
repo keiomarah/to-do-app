@@ -5,10 +5,17 @@
     <button class="dismiss-btn" id="close-dialog-btn">&times;</button>
   </div>
   <form id="new-task-form" method="POST" action="/add-task">
+    <input type="hidden" id="task-id" name="task_id" />
     <label for="task_name">Task Title</label>
-    <input type="text" id="task_name" name="task_name" />
+    <input type="text" id="task_name" name="task_name" required />
     <label>Due Date</label>
-    <input type="date" id="due_date" name="due_date" placeholder="today" />
+    <input
+      type="date"
+      id="due_date"
+      name="due_date"
+      placeholder="today"
+      required
+    />
     <fieldset class="priority-group">
       <legend>Priority</legend>
       <input type="radio" id="low" name="priority" value="low" />
@@ -29,14 +36,28 @@
   </form>
 </dialog>
 <div class="home-page">
-  <div id="homepage-sidebar">
+  <div id="homepage-sidebar" class="sidebar">
     <div class="logo container"></div>
     <ul class="categories">
       <h3>Categories</h3>
-      <li><a href="/">Today</a></li>
-      <li><a href="/all-tasks">All Tasks</a></li>
-      <li><a href="/completed-tasks">Completed</a></li>
-      <li><a href="/high-priority-tasks">High Priority</a></li>
+      <li class="{% block tab1 %}selected{% endblock %}">
+        <a href="/"><i class="fa-solid fa-calendar-day"></i> Today</a>
+      </li>
+      <li class="{% block tab2 %}{% endblock %}">
+        <a href="/all-tasks"
+          ><i class="fa-solid fa-list-check"></i> All Tasks</a
+        >
+      </li>
+      <li class="{% block tab3 %}{% endblock %}">
+        <a href="/completed-tasks"
+          ><i class="fa-solid fa-calendar-check"></i> Completed</a
+        >
+      </li>
+      <li class="{% block tab4 %}{% endblock %}">
+        <a href="/high-priority-tasks"
+          ><i class="fa-solid fa-circle-exclamation"></i> High Priority</a
+        >
+      </li>
     </ul>
   </div>
   <div id="main-dashboard" class="main-dashboard">
@@ -49,7 +70,7 @@
           <span id="pending-task-counter"></span> pending task(s)
         </p>
       </div>
-      <button class="purple-button" id="add-task-btn">
+      <button class="purple-button add-task-btn">
         <span>&plus;</span> Add new task
       </button>
     </header>
@@ -130,7 +151,7 @@
               {{task.due.strftime("%b %d, %Y")}}
             </div>
             <div class="edit-delete-buttons">
-              <button type="button">
+              <button type="button" onClick="editTask({{ task.id }})">
                 <i class="fa-regular fa-pen-to-square"></i>
               </button>
               <button type="button" onClick="deleteTask({{ task.id }})">

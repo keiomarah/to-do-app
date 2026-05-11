@@ -1,4 +1,6 @@
-{% extends "home.html" %} {% block dashboard %}
+{% extends "home.html" %} {% block tab1 %} {% endblock %} {% block tab2 %} {%
+endblock %} {% block tab3 %} {% endblock %} {% block tab4 %}selected{% endblock
+%} {% block dashboard %}
 <form class="tasks-container">
   <!----------------------------------------------------------------------------------------->
   {% if user.tasks %} {% for task in user.tasks %} {% if task.priority == "high"
@@ -34,7 +36,7 @@
         {{task.due.strftime("%b %d, %Y")}}
       </div>
       <div class="edit-delete-buttons">
-        <button type="button">
+        <button type="button" onClick="editTask({{ task.id }})">
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
         <button type="button" onClick="deleteTask({{ task.id }})">

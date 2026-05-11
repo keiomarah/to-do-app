@@ -1,5 +1,7 @@
-{% extends 'home.html' %} {% block dashboard %}
-<button type="button" class="purple-button" id="add-task-btn2">
+{% extends 'home.html' %} {% block tab1 %} {% endblock %} {% block tab2
+%}selected{% endblock %} {% block tab3 %} {% endblock %} {% block tab4 %} {%
+endblock %} {% block dashboard %}
+<button type="button" class="purple-button add-task-btn" id="add-task-btn2">
   <span>&plus;</span> Add new task
 </button>
 <form class="tasks-container">
@@ -36,7 +38,7 @@
         {{task.due.strftime("%b %d, %Y")}}
       </div>
       <div class="edit-delete-buttons">
-        <button type="button">
+        <button type="button" onClick="editTask({{ task.id }})">
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
         <button type="button" onClick="deleteTask({{ task.id }})">

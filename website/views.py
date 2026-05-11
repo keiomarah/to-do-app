@@ -37,13 +37,21 @@ def high_priority_tasks():
 @login_required
 def add_task():
     if request.method == 'POST':
+        task_id = request.form.get("task_id")
         task_name = request.form.get('task_name')
         due_date = datetime.strptime(request.form.get('due_date'), "%Y-%m-%d").date()
         priority = request.form.get('priority')
 
-        new_task = Task(task_name=task_name, due=due_date, priority=priority, user_id=current_user.id)
+        if task_id:
+            task = Task.query.get(task_id)
+            task.task_name = task_name
+            task.due = due_date
+            task.priority = priority
+        else:
+            new_task = Task(task_name=task_name, due=due_date, priority=priority, user_id=current_user.id)
 
-        db.session.add(new_task)
+            db.session.add(new_task)
+        
         db.session.commit()
 
     return redirect(request.referrer)
@@ -84,3 +92,16 @@ def tasks():
     }
     for task in tasks
     ])
+
+@views.route("/task/<int:task_id>", methods=["GET"])
+def get_task(task_id):
+    task = Task.query.filter_by(id=task_id).first()
+
+    if task:
+        return jsonify(
+    {
+        "id": task.id,
+        "name": task.task_name,
+        "completed": task.complete,
+        "due": task.due.isoformat()
+    })
