@@ -18,7 +18,7 @@
     />
     <fieldset class="priority-group">
       <legend>Priority</legend>
-      <input type="radio" id="low" name="priority" value="low" />
+      <input type="radio" id="low" name="priority" value="low" required />
       <label for="low" class="low-p">Low</label>
 
       <input type="radio" id="medium" name="priority" value="medium" />
@@ -59,6 +59,9 @@
         >
       </li>
     </ul>
+    <div id="logout-btn">
+      <a href="auth/logout">log Out</a>
+    </div>
   </div>
   <div id="main-dashboard" class="main-dashboard">
     {% block dashboard %}

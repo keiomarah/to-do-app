@@ -19,12 +19,12 @@ const completedTasksToday = document.getElementById("completed-tasks-today");
 const percentComplete = document.getElementById("percent-complete");
 const progressBar = document.getElementById("progress-bar-solid");
 const CompletedThisWeek = document.getElementById("completed-counter");
-
 CompletedThisWeek.textContent = "0";
 let progressBarWidth = 0;
 const today = new Date();
 const sevenDaysAgo = today - 7 * 24 * 60 * 60 * 1000;
 today.setHours(0, 0, 0, 0);
+
 document.querySelectorAll("input[type='checkbox']").forEach((cb) => {
   cb.addEventListener("change", dailyProgressBar);
 });
